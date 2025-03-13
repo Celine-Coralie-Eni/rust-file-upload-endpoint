@@ -1,11 +1,8 @@
 [package]
-name = "rest_api"
+name = "file-upload"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-axum = "0.8.1"
-tokio = { version = "1", features = ["full"], default-features = false }
-tower = "0.5.2"
-multipart = "0.18.0"
-axum-server = "0.7.1"
+axum = { version = "0.7.3", features = ["multipart"] }
+tokio = { version = "1.35.0", features = ["full"] }
