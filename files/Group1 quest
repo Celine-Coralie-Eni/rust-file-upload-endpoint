@@ -1,0 +1,144 @@
+QUESTIONS
+
+1. What is the difference between a refutable and irrefutable pattern in Rust?
+
+2. Why can't refutable patterns be used in let statements directly?
+
+3. Why is this code invalid?
+```rs
+let Some(x) = some_option;
+```
+4. When is it acceptable to use refutable patterns in a let statement?
+
+5. What is the role of match arms with refutable patterns?
+
+6. Can you bind a reference in a refutable pattern?
+
+7. What happens if a refutable pattern is used in a let binding, like this?
+```rs
+let Some(x) = Option::<i32>::None;
+```
+Answer: This will cause a runtime panic because Some(x) can’t match None, and Rust will panic since this is a refutable pattern used where no match is expected.
+
+8. What is the reasoning behind the restriction that let can only use irrefutable patterns?
+
+9. Can you write a match arm with a refutable pattern as the first arm?
+
+10. What’s the difference in the behavior of let bindings with refutable and irrefutable patterns when destructuring a tuple?
+
+11. Why can’t I use Some(x) in let directly with an Option<T>?
+
+Answer: The pattern Some(x) is refutable because an Option<T> could be either Some(T) or None, meaning the match could fail. Rust enforces that let should be used with irrefutable patterns, hence a direct let Some(x) = option; is not allowed.
+
+12. How does the borrow checker relate to refutable and irrefutable patterns?
+
+Answer: The borrow checker ensures that when you are destructuring, you're either borrowing or moving data in a safe and efficient manner. With refutable patterns, you need to ensure that patterns (like Some(x)) that borrow data from the value don't violate ownership or borrow rules.
+
+
+
+   > Irrefutable patterns 
+    • def
+    • uses
+    • xtics
+    • keypoints
+
+   > Refutable patterns 
+    • def
+    • uses
+    • xtics
+    • keypoints
+
+   > Differences
+
+   > Examples and sample codes 
+
+
+                       EXPLANATION!
+                       IRREFUTABLE!
+Definition
+ Irrefutable patterns are patterns that always match. They cannot fail to match against any value. These patterns are typically used in scenarios where the value being matched is guaranteed to always meet the pattern.
+ 
+Uses cases
+     Irrefutable patterns are used in places where the value is guaranteed to match the pattern. They do not have the possibility of failing. Below are some common situations where irrefutable patterns are used.
+a. let Statements
+A let statement in Rust binds a variable to a value. If the pattern is simple (e.g., a variable name), it is irrefutable because the value will always be assigned.
+
+b. Function Parameters
+Function parameters are irrefutable because the values passed to the function are guaranteed to match the parameters. Rust ensures that when the function is called, the arguments match the pattern in the parameter list.
+
+c. for Loops
+A for loop in Rust iterates over collections like vectors, arrays, etc., and binds the loop variable to each item in the collection. This is an irrefutable pattern because the loop is designed to match each item in the collection.
+
+Xtics
+   Irrefutable patterns are expected to always succeed. 
+   Rust ensures that they will match all possible values for the type.
+   
+Keypoints
+- They are used in cases where the value must always match.
+- They are typically used in function parameters and simple let bindings.
+
+                             REFUTABLE!
+Definition
+    Refutable patterns are patterns that can fail to match. They are capable of not matching a value, depending on the structure or data they are trying to match against. The matching may fail if the structure of the data doesn't conform to the pattern.
+    
+Use cases
+    Refutable patterns are used in places where there is a possibility that the value will not match the pattern. These patterns may fail to match under certain conditions, so they are used in cases where handling such failures is necessary.
+    
+a. if let Expressions
+if let is used to match a single pattern against a value, and it can fail if the value does not conform to the expected pattern. It is a more concise way to handle one case of a match expression.
+
+b. match Expressions
+The match expression is used to match a value against multiple patterns. Since the patterns in the arms of match can fail, the match expression is considered refutable. Rust ensures that all possible cases are handled (e.g., using a wildcard _ for unhandled cases).
+
+c. while let Loops
+A while let loop is used to repeatedly match a pattern while the pattern continues to match the value. This is typically used when iterating over a stream or collection where the value may not match the pattern on every iteration.
+
+Xtics
+    Refutable patterns are more flexible but can cause the code to fail or not enter certain branches of a match or if let expression.
+    Rust requires that you handle all possible cases when using refutable patterns (e.g., with a match expression).
+
+Keypoints
+- They can fail to match, which is why they are used in conditional matching like if let or match.
+- Rust forces you to handle all possible cases or provide a default case (e.g., _ in match).
+
+Differences
+> Always matches the value while May fail to match the value
+> Used in Function parameters, let bindings and for loops while used in match, if let, while let conditions
+> No need to handle errors as they won't fail while Must handle failure or incomplete matches
+> Examples are let x = 5;, fn foo(x: i32) while if let Some(x) = opt, match Some(x).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
